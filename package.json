@@ -6,7 +6,6 @@
     "apps/*",
     "packages/*"
   ],
-  
   "scripts": {
     "g": "git add . && git commit -m - && git push -u origin main -f",
     "start": "concurrently npm:dev npm:emulators",
