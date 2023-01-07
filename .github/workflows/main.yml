@@ -18,32 +18,39 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-        with:
-          node-version: "${{ env.NODE_VERSION }}"
-      - name: Cache node modules
-        id: cache-npm
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with: 
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Create google service account file and env var
-        run: |
-          # decode the token into json and write to file, using base64 to not have to mess with the json format
-          echo "Creating file in $HOME/firebase.json"
-          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON_BASE64 }}" | base64 --decode > "$HOME/firebase.json"
+      #   with:
+      #     node-version: "${{ env.NODE_VERSION }}"
+      # - name: Cache node modules
+      #   id: cache-npm
+      #   uses: actions/cache@v3
+      #   env:
+      #     cache-name: cache-node-modules
+      #   with: 
+      #     # npm cache files are stored in `~/.npm` on Linux/macOS
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-build-${{ env.cache-name }}-
+      #       ${{ runner.os }}-build-
+      #       ${{ runner.os }}-
+      # - name: Create google service account file and env var
+      #   run: |
+      #     # decode the token into json and write to file, using base64 to not have to mess with the json format
+      #     echo "Creating file in $HOME/firebase.json"
+      #     echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON_BASE64 }}" | base64 --decode > "$HOME/firebase.json"
           
-          # source the env with the path to the file
-          echo "Sourcing env GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase.json"
-          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase.json" >> $GITHUB_ENV
-      - name: Install
-        run: npm install
+      #     # source the env with the path to the file
+      #     echo "Sourcing env GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase.json"
+      #     echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase.json" >> $GITHUB_ENV
+      # - name: Install
+      #   run: npm install
   
-      - name: Deploy to firebase
-        run: npm run deploy
+      # - name: Deploy to firebase
+      #   run: npm run deploy
+      - name: Deploy to Firebase
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only hosting
+      env:
+        FIREBASE_TOKEN: 1//09QOSVkG6tvBNCgYIARAAGAkSNwF-L9IrCD6HXF7Aa9u7axz0_Z9dQb616RHFrqXk_-8IUoCVxCFZx8xWNc9IToXJQJbw6fUwtos #${{ secrets.FIREBASE_TOKEN }}
+        
