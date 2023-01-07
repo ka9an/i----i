@@ -13,44 +13,12 @@ on:
 #   NODE_VERSION: "16"
 
 jobs:
-  build-and-deploy:
-    runs-on: "ubuntu-latest"
+  main:
+    name: Deploy to Firebase
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: "${{ env.NODE_VERSION }}"
-      # - name: Cache node modules
-      #   id: cache-npm
-      #   uses: actions/cache@v3
-      #   env:
-      #     cache-name: cache-node-modules
-      #   with: 
-      #     # npm cache files are stored in `~/.npm` on Linux/macOS
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-${{ env.cache-name }}-
-      #       ${{ runner.os }}-build-
-      #       ${{ runner.os }}-
-      # - name: Create google service account file and env var
-      #   run: |
-      #     # decode the token into json and write to file, using base64 to not have to mess with the json format
-      #     echo "Creating file in $HOME/firebase.json"
-      #     echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON_BASE64 }}" | base64 --decode > "$HOME/firebase.json"
-          
-      #     # source the env with the path to the file
-      #     echo "Sourcing env GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase.json"
-      #     echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase.json" >> $GITHUB_ENV
-      # - name: Install
-      #   run: npm install
-  
-      # - name: Deploy to firebase
-      #   run: npm run deploy
-      - name: Deploy to Firebase
-      uses: w9jds/firebase-action@master
-      with:
-        args: deploy --only hosting
+    - uses: actions/checkout@v3
+    - uses: lowply/deploy-firebase@v0.0.5
       env:
-        FIREBASE_TOKEN: ${{ secrets.F }}
-        
+        FIREBASE_TOKEN: 1//09LfNoiWISr1VCgYIARAAGAkSNwF-L9IrSt7mxTkMEj589gdxE1e6xRTFIc-1qF-mq66gCDkOcGkWxDUI1-mAqWv_W2vzevZJNq0 #${{ secrets.FIREBASE_TOKEN }}
+        FIREBASE_PROJECT: i----i
