@@ -1,0 +1,31 @@
+{
+  "name": "turborepo-firebase",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  
+  "scripts": {
+    "g": "git add . && git commit -m - && git push -u origin main -f",
+    "start": "concurrently npm:dev npm:emulators",
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "deploy": "turbo run build --parallel && turbo run deploy --filter=web --filter=api",
+    "lint": "turbo run lint"
+  },
+
+  "devDependencies": {
+    "concurrently": "latest",
+    "firebase-tools": "latest",
+    "rimraf": "latest",
+    "turbo": "latest"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "packageManager": "npm@latest"
+}
+
