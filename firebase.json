@@ -3,7 +3,7 @@
   "hosting": {
     
     
-    "public": "apps/web/dist",
+    "public": "apps/qwik/dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
